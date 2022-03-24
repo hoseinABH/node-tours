@@ -4,8 +4,15 @@ const fs = require('fs');
 // Initilize app
 const app = express();
 
-// Middleware For Getting Request Body
+// Middlewares
+/* Getting Request Body */
 app.use(express.json());
+
+/* Getting Request Time */
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 // Fake Database
 const tours = JSON.parse(
@@ -51,6 +58,7 @@ const createTour = (req, res) => {
     (err) => {
       res.status(201).json({
         status: 'successful',
+        createdAt: req.requestTime,
         data: {
           tour: newTour,
         },
@@ -85,11 +93,12 @@ const deleteTour = (req, res) => {
 };
 
 // Routes
-app.get('/api/v1/tours', getAllTours);
-app.get('/api/v1/tours/:id', getTourById);
-app.post('/api/v1/tours', createTour);
-app.patch('/api/v1/tours/:id', updateTour);
-app.delete('/api/v1/tours/:id', deleteTour);
+app.route('/api/v1/tours').get(getAllTours).post(createTour);
+app
+  .route('/api/v1/tours/:id')
+  .get(getTourById)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 const port = 3000;
 app.listen(port, () => {
