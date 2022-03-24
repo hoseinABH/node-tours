@@ -1,10 +1,13 @@
 const express = require('express');
 const fs = require('fs');
-
+const morgan = require('morgan');
 // Initilize app
 const app = express();
 
 // Middlewares
+/* Logging Requests*/
+app.use(morgan('dev'));
+
 /* Getting Request Body */
 app.use(express.json());
 
