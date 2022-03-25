@@ -8,10 +8,14 @@ const app = express();
 
 // Middlewares
 /* Logging Requests*/
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 /* Getting Request Body */
 app.use(express.json());
+
+app.use(express.static(`${__dirname}/public`));
 
 /* Getting Request Time */
 app.use((req, res, next) => {

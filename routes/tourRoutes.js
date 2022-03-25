@@ -11,7 +11,7 @@ const {
 
 const router = express.Router();
 
-// Middlewar for validate tour ID
+// Middleware for validate tour ID
 router.param('id', checkID);
 
 router.route('/').get(getAllTours).post(checkBody, createTour);
