@@ -32,7 +32,7 @@ const tourSchema = new mongoose.Schema({
     required: [true, 'A tour must have a price.'],
   },
   priceDiscount: Number,
-  summery: {
+  summary: {
     type: String,
     trim: true,
     required: [true, 'A tour must have a description.'],
@@ -50,7 +50,7 @@ const tourSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  startDate: [Date],
+  startDates: [Date],
 });
 
 module.exports = mongoose.model('Tour', tourSchema);
