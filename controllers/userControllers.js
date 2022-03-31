@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 const fs = require('fs');
 
 // Fake Database
@@ -34,13 +35,13 @@ exports.getUserById = (req, res) => {
 
 exports.createUser = (req, res) => {
   const newId = users[users.length - 1].id + 1;
-  const newTour = Object.assign({ id: newId }, req.body);
+  const newTour = { id: newId, ...req.body };
   users.push(newTour);
 
   fs.writeFile(
     `${__dirname}/../dev-data/data/users.json`,
     JSON.stringify(users),
-    (err) => {
+    () => {
       res.status(201).json({
         status: 'successful',
         createdAt: req.requestTime,
